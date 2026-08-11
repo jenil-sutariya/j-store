@@ -1,0 +1,53 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx --yes create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --use-npm --no-turbopack)",
+      "Bash(npx prisma *)",
+      "Read(//d/jewellry shop/**)",
+      "Bash(DATABASE_URL=\"postgres://postgres:postgres@localhost:51218/template1?sslmode=disable\" node db-check.mjs)",
+      "Bash(DATABASE_URL=\"postgres://postgres:postgres@localhost:51218/template1?sslmode=disable\" npx --yes tsx db-check.mjs)",
+      "Bash(node -e \"console.log\\(require\\('crypto'\\).randomBytes\\(32\\).toString\\('base64'\\)\\)\")",
+      "Bash(cd \"/d/jewellry shop\" && npx prisma db seed 2>&1 | tail -100)",
+      "Bash(mv src/middleware.ts src/proxy.ts)",
+      "Bash(npm run *)",
+      "Bash(echo \"started with pid $!\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000)",
+      "Bash(curl -s -o /dev/null -w \"home: %{http_code}\\\\n\" http://localhost:3000)",
+      "Bash(curl -s -i http://localhost:3000/admin/dashboard)",
+      "Bash(cd \"/d/jewellry shop\" && npm run build 2>&1 | tail -60)",
+      "Bash(netstat -ano)",
+      "Bash(powershell -NoProfile -Command \"Stop-Process -Id 164 -Force\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000 --max-time 3)",
+      "Bash(cd \"/d/jewellry shop\" && npm run build 2>&1 | tail -150)",
+      "Bash(node -e \"console.log\\(require\\('./node_modules/zod/package.json'\\).version\\); console.log\\(require\\('./node_modules/@hookform/resolvers/package.json'\\).version\\)\")",
+      "Bash(xargs grep -l \"render\")",
+      "Bash(cd \"/d/jewellry shop\" && grep -n \"render\" node_modules/@base-ui/react/internals/types.d.ts | head -20)",
+      "Bash(cd \"/d/jewellry shop\" && npm run build 2>&1 | tail -100)",
+      "Bash(echo \"started pid $!\")",
+      "Bash(curl -s -i -b /tmp/cookies.txt http://localhost:3000/admin/categories)",
+      "Read(//tmp/**)",
+      "Bash(powershell -NoProfile -Command \"Stop-Process -Id 23568 -Force\")",
+      "Bash(curl -s -b /tmp/cookies2.txt http://localhost:3000/api/auth/session)",
+      "Bash(cd \"/d/jewellry shop\" && npx prisma dev ls 2>&1 | tail -30)",
+      "Bash(cd \"/d/jewellry shop\" && npx prisma dev stop --name jewellry-shop 2>&1 | tail -20 *)",
+      "Bash(cd \"/d/jewellry shop\" && npx prisma dev stop jewellry-shop 2>&1 | tail -20)",
+      "Bash(cd \"/d/jewellry shop\" && npx prisma dev --detach --name jewellry-shop 2>&1 | tail -20)",
+      "Bash(sleep 3 && cd \"/d/jewellry shop\" && npx prisma dev ls 2>&1 | tail -20)",
+      "Bash(powershell -NoProfile -Command \"Stop-Process -Id 21048 -Force\")",
+      "Bash(curl -s http://localhost:3000/admin/categories -b /tmp/cookies4.txt)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" -b /tmp/cookies4.txt http://localhost:3000/admin/dashboard)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" -b /tmp/cookies4.txt http://localhost:3000/admin/categories/new)",
+      "Bash(mkdir -p \"d:/jewellry shop/src/app/admin/collections/new\" \"d:/jewellry shop/src/app/admin/collections/[id]\")",
+      "Bash(mkdir -p \"d:/jewellry shop/src/app/admin/products/new\" \"d:/jewellry shop/src/app/admin/products/[id]\")",
+      "Bash(cd \"/d/jewellry shop\" && npm run build 2>&1 | tail -200)",
+      "Bash(mkdir -p \"d:/jewellry shop/src/app/admin/coupons/new\" \"d:/jewellry shop/src/app/admin/coupons/[id]\")",
+      "Bash(xargs grep -n \"class PrismaPg\\\\|interface.*Config\\\\|idleTimeout\\\\|constructor\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" -b /tmp/cookies4.txt http://localhost:3000/admin/products)"
+    ],
+    "additionalDirectories": [
+      "d:\\jewellry shop\\src\\app\\admin\\collections",
+      "d:\\jewellry shop\\src\\app\\admin\\products",
+      "d:\\jewellry shop\\src\\app\\admin\\coupons"
+    ]
+  }
+}
