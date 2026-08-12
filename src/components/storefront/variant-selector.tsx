@@ -168,7 +168,8 @@ export function VariantSelector({
             <div className="flex items-center border border-border">
               <button
                 type="button"
-                className="px-3 py-1.5 text-sm"
+                aria-label="Decrease quantity"
+                className="px-3.5 py-2 text-sm"
                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
               >
                 −
@@ -176,7 +177,8 @@ export function VariantSelector({
               <span className="px-3 text-sm">{quantity}</span>
               <button
                 type="button"
-                className="px-3 py-1.5 text-sm"
+                aria-label="Increase quantity"
+                className="px-3.5 py-2 text-sm"
                 disabled={quantity >= selectedVariant.stockQuantity}
                 onClick={() => setQuantity((q) => Math.min(selectedVariant.stockQuantity, q + 1))}
               >

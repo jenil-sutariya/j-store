@@ -6,7 +6,11 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { uploadImageToCloudinary } from "@/lib/cloudinary-client";
-import { addProductImage, deleteProductImage } from "@/lib/actions/product-image";
+import {
+  addProductImage,
+  deleteProductImage,
+  updateProductImageAltText,
+} from "@/lib/actions/product-image";
 
 type ProductImage = { id: string; url: string; altText: string | null };
 
@@ -23,6 +27,8 @@ export function ProductImagesManager({
   const inputRef = useRef<HTMLInputElement>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [pendingId, setPendingId] = useState<string | null>(null);
+  const altTextFocusValues = useRef<Record<string, string>>({});
+  const [savingAltId, setSavingAltId] = useState<string | null>(null);
 
   async function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -57,20 +63,48 @@ export function ProductImagesManager({
     router.refresh();
   }
 
+  async function handleAltTextBlur(imageId: string, value: string) {
+    const initialValue = altTextFocusValues.current[imageId] ?? "";
+    if (value === initialValue) return;
+
+    setSavingAltId(imageId);
+    const result = await updateProductImageAltText(imageId, value);
+    setSavingAltId(null);
+
+    if (!result.success) {
+      toast.error(result.error);
+      return;
+    }
+    router.refresh();
+  }
+
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap gap-3">
         {images.map((image) => (
-          <div key={image.id} className="relative h-24 w-24 overflow-hidden rounded-md border">
-            <Image src={image.url} alt={image.altText ?? ""} fill className="object-cover" />
-            <button
-              type="button"
-              disabled={pendingId === image.id}
-              onClick={() => handleDelete(image.id)}
-              className="absolute top-0.5 right-0.5 rounded bg-background/80 px-1 text-xs text-destructive"
-            >
-              ✕
-            </button>
+          <div key={image.id} className="w-24 space-y-1">
+            <div className="relative h-24 w-24 overflow-hidden rounded-md border">
+              <Image src={image.url} alt={image.altText ?? ""} fill className="object-cover" />
+              <button
+                type="button"
+                disabled={pendingId === image.id}
+                onClick={() => handleDelete(image.id)}
+                className="absolute top-0.5 right-0.5 rounded bg-background/80 px-1 text-xs text-destructive"
+              >
+                ✕
+              </button>
+            </div>
+            <input
+              type="text"
+              defaultValue={image.altText ?? ""}
+              placeholder="Alt text"
+              disabled={savingAltId === image.id}
+              onFocus={(event) => {
+                altTextFocusValues.current[image.id] = event.target.value;
+              }}
+              onBlur={(event) => handleAltTextBlur(image.id, event.target.value)}
+              className="w-24 rounded border px-1 py-0.5 text-xs"
+            />
           </div>
         ))}
       </div>

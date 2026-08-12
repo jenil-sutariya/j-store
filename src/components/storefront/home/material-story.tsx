@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Reveal } from "@/components/storefront/reveal";
 
-const MATERIALS = [
+const DEFAULT_MATERIALS = [
   {
     name: "18K Gold",
     copy: "Warm, enduring and unmistakably timeless.",
@@ -14,7 +14,11 @@ const MATERIALS = [
   },
 ];
 
-export function MaterialStory() {
+export function MaterialStory({
+  materials = DEFAULT_MATERIALS,
+}: {
+  materials?: { name: string; copy: string; image: string }[];
+}) {
   return (
     <section className="mx-auto max-w-7xl px-6 py-28">
       <Reveal>
@@ -23,7 +27,7 @@ export function MaterialStory() {
         </p>
       </Reveal>
       <div className="grid gap-10 sm:grid-cols-2 sm:gap-16">
-        {MATERIALS.map((material, index) => (
+        {materials.map((material, index) => (
           <Reveal key={material.name} delay={index * 0.1}>
             <div className="relative mb-6 aspect-[3/4] overflow-hidden">
               <Image src={material.image} alt={material.name} fill className="object-cover" />

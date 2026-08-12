@@ -1,14 +1,21 @@
+import Link from "next/link";
 import { LegalContent } from "@/components/storefront/legal-content";
+import { getStoreSettings } from "@/lib/queries/settings";
 
-export default function ShippingPolicyPage() {
+export default async function ShippingPolicyPage() {
+  const settings = await getStoreSettings();
+
   return (
     <LegalContent title="Shipping Policy" updatedLabel="Last updated: August 2026">
       <p>We ship across India via trusted courier and registered post partners.</p>
 
       <h2>Shipping charges</h2>
       <ul>
-        <li>Free shipping on orders above ₹2,000.</li>
-        <li>A flat ₹99 shipping fee applies to orders below ₹2,000.</li>
+        <li>Free shipping on orders above ₹{settings.freeShippingThreshold.toLocaleString("en-IN")}.</li>
+        <li>
+          A flat ₹{settings.shippingFlatFee.toLocaleString("en-IN")} shipping fee applies to orders
+          below ₹{settings.freeShippingThreshold.toLocaleString("en-IN")}.
+        </li>
       </ul>
 
       <h2>Delivery timelines</h2>
@@ -21,9 +28,9 @@ export default function ShippingPolicyPage() {
       <h2>Order tracking</h2>
       <p>
         Once your order ships, you can track its status any time from{" "}
-        <a href="/account/orders" className="underline">
+        <Link href="/account/orders" data-cursor-hover className="link-underline pb-0.5">
           your order history
-        </a>
+        </Link>
         .
       </p>
 

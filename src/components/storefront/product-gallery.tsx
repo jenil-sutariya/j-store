@@ -21,14 +21,15 @@ export function ProductGallery({ images, productName }: { images: GalleryImage[]
         )}
       </div>
       {images.length > 1 && (
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           {images.map((image, index) => (
             <button
               key={image.url + index}
               type="button"
               onClick={() => setActiveIndex(index)}
-              className={`relative h-16 w-16 overflow-hidden rounded-md border ${
-                index === activeIndex ? "border-foreground" : "border-transparent"
+              aria-label={`View image ${index + 1}`}
+              className={`relative h-16 w-16 shrink-0 overflow-hidden rounded-md border transition-colors ${
+                index === activeIndex ? "border-foreground" : "border-border hover:border-foreground/50"
               }`}
             >
               <Image src={image.url} alt="" fill className="object-cover" />

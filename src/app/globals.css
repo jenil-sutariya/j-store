@@ -166,4 +166,14 @@
     rotate: 45deg;
     background: var(--primary);
   }
+
+  /* Hides the scrollbar on horizontally-scrollable rows (e.g. the filter
+     bar's pill row on narrow viewports) while keeping touch/wheel scroll. */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }

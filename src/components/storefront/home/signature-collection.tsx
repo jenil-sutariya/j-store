@@ -12,7 +12,7 @@ type Collection = {
 
 export function SignatureCollection({ collection }: { collection: Collection }) {
   return (
-    <section className="relative h-[85vh] w-full overflow-hidden bg-foreground">
+    <section className="relative h-[85svh] w-full overflow-hidden bg-foreground">
       {collection.bannerUrl && (
         <Image
           src={collection.bannerUrl}

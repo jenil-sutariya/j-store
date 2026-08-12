@@ -38,6 +38,32 @@ export async function addProductImage(
   return { success: true };
 }
 
+export async function updateProductImageAltText(
+  imageId: string,
+  altText: string,
+): Promise<ActionResult> {
+  await requireAdmin();
+
+  try {
+    const image = await prisma.productImage.findUnique({ where: { id: imageId } });
+    if (!image) {
+      return { success: false, error: "Image not found." };
+    }
+
+    await prisma.productImage.update({
+      where: { id: imageId },
+      data: { altText: altText || null },
+    });
+
+    revalidatePath(`/admin/products/${image.productId}`);
+  } catch (error) {
+    console.error(error);
+    return { success: false, error: "Failed to update alt text." };
+  }
+
+  return { success: true };
+}
+
 export async function deleteProductImage(imageId: string): Promise<ActionResult> {
   await requireAdmin();
 

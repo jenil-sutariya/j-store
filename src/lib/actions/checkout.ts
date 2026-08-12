@@ -6,9 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { validateCoupon } from "@/lib/coupon";
 import { createRazorpayOrder, verifyPaymentSignature } from "@/lib/razorpay";
-
-const SHIPPING_FLAT = 99;
-const FREE_SHIPPING_THRESHOLD = 2000;
+import { getStoreSettings } from "@/lib/queries/settings";
 
 function generateOrderNumber() {
   const year = new Date().getFullYear();
@@ -88,7 +86,9 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
     return sum + (lineTotal - taxable);
   }, 0);
 
-  const shippingTotal = subtotal - discountTotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FLAT;
+  const settings = await getStoreSettings();
+  const shippingTotal =
+    subtotal - discountTotal >= settings.freeShippingThreshold ? 0 : settings.shippingFlatFee;
   const grandTotal = subtotal - discountTotal + shippingTotal;
 
   const orderNumber = generateOrderNumber();

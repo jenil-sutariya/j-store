@@ -7,7 +7,6 @@ import { sendRegistrationOtp, verifyOtpAndRegister } from "@/lib/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const RESEND_COOLDOWN_SECONDS = 30;
 
@@ -96,14 +95,16 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted/30 px-4">
-      <Card className="w-full max-w-sm">
-        <CardHeader>
-          <CardTitle>{step === "details" ? "Create an account" : "Verify your email"}</CardTitle>
-        </CardHeader>
-        <CardContent>
+    <div className="flex min-h-screen items-center justify-center bg-muted/30 px-4 py-12">
+      <div className="w-full max-w-md border border-border bg-card p-6 sm:p-8 md:p-10">
+        <p className="mb-3 text-xs tracking-[0.3em] text-muted-foreground uppercase">Aurelia</p>
+        <h1 className="mb-8 font-display text-3xl sm:text-4xl">
+          {step === "details" ? "Create an Account" : "Verify Your Email"}
+        </h1>
+
+        <div>
           {step === "details" ? (
-            <form onSubmit={handleSendOtp} className="space-y-4">
+            <form onSubmit={handleSendOtp} className="space-y-5">
               <div className="space-y-2">
                 <Label htmlFor="name">Name</Label>
                 <Input id="name" value={name} onChange={(e) => setName(e.target.value)} required />
@@ -134,7 +135,7 @@ export default function RegisterPage() {
               </Button>
             </form>
           ) : (
-            <form onSubmit={handleVerify} className="space-y-4">
+            <form onSubmit={handleVerify} className="space-y-5">
               <p className="text-sm text-muted-foreground">
                 We sent a 6-digit code to <span className="font-medium text-foreground">{email}</span>.
               </p>
@@ -154,10 +155,12 @@ export default function RegisterPage() {
               <Button type="submit" className="w-full" disabled={isSubmitting || code.length !== 6}>
                 {isSubmitting ? "Verifying..." : "Verify & create account"}
               </Button>
-              <div className="flex items-center justify-between text-xs text-muted-foreground">
-                <button
+              <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+                <Button
                   type="button"
-                  className="underline disabled:opacity-50"
+                  variant="link"
+                  size="sm"
+                  className="h-auto p-0 text-xs text-muted-foreground"
                   disabled={isSubmitting}
                   onClick={() => {
                     setStep("details");
@@ -166,20 +169,22 @@ export default function RegisterPage() {
                   }}
                 >
                   Change details
-                </button>
-                <button
+                </Button>
+                <Button
                   type="button"
-                  className="underline disabled:opacity-50"
+                  variant="link"
+                  size="sm"
+                  className="h-auto p-0 text-xs text-muted-foreground"
                   disabled={isSubmitting || cooldown > 0}
                   onClick={handleResendOtp}
                 >
                   {cooldown > 0 ? `Resend in ${cooldown}s` : "Resend code"}
-                </button>
+                </Button>
               </div>
             </form>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

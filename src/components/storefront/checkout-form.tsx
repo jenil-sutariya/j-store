@@ -155,25 +155,25 @@ export function CheckoutForm({
   }
 
   return (
-    <div className="space-y-8">
-      <section className="space-y-3">
-        <h2 className="text-lg font-semibold">Delivery address</h2>
-        <div className="space-y-2">
+    <div className="space-y-6 sm:space-y-8">
+      <section className="space-y-4 border border-border bg-card p-6 sm:p-8">
+        <h2 className="text-lg font-medium">Delivery address</h2>
+        <div className="space-y-3">
           {addresses.map((address) => (
             <label
               key={address.id}
-              className={`flex cursor-pointer items-start gap-3 rounded-md border p-3 text-sm ${
-                selectedAddressId === address.id ? "border-foreground" : ""
+              className={`flex cursor-pointer items-start gap-3 border p-4 text-sm transition-colors ${
+                selectedAddressId === address.id ? "border-primary" : "border-border"
               }`}
             >
               <input
                 type="radio"
                 name="address"
-                className="mt-1"
+                className="mt-1 shrink-0 accent-primary"
                 checked={selectedAddressId === address.id}
                 onChange={() => setSelectedAddressId(address.id)}
               />
-              <span>
+              <span className="break-words">
                 <span className="font-medium">{address.fullName}</span>
                 <br />
                 {address.line1}
@@ -202,9 +202,9 @@ export function CheckoutForm({
         </Dialog>
       </section>
 
-      <section className="space-y-3">
-        <h2 className="text-lg font-semibold">Coupon</h2>
-        <div className="flex gap-2">
+      <section className="space-y-4 border border-border bg-card p-6 sm:p-8">
+        <h2 className="text-lg font-medium">Coupon</h2>
+        <div className="flex flex-col gap-2 sm:flex-row">
           <Input
             placeholder="Enter coupon code"
             value={couponCode}
@@ -214,7 +214,13 @@ export function CheckoutForm({
               setCouponError(null);
             }}
           />
-          <Button type="button" variant="outline" disabled={isApplyingCoupon} onClick={handleApplyCoupon}>
+          <Button
+            type="button"
+            variant="outline"
+            className="sm:shrink-0"
+            disabled={isApplyingCoupon}
+            onClick={handleApplyCoupon}
+          >
             Apply
           </Button>
         </div>
@@ -224,13 +230,14 @@ export function CheckoutForm({
         )}
       </section>
 
-      <section className="space-y-3">
-        <h2 className="text-lg font-semibold">Payment method</h2>
+      <section className="space-y-4 border border-border bg-card p-6 sm:p-8">
+        <h2 className="text-lg font-medium">Payment method</h2>
         <div className="space-y-2">
           <label className="flex items-center gap-2 text-sm">
             <input
               type="radio"
               name="paymentMethod"
+              className="accent-primary"
               checked={paymentMethod === "RAZORPAY"}
               onChange={() => setPaymentMethod("RAZORPAY")}
             />
@@ -240,6 +247,7 @@ export function CheckoutForm({
             <input
               type="radio"
               name="paymentMethod"
+              className="accent-primary"
               checked={paymentMethod === "COD"}
               onChange={() => setPaymentMethod("COD")}
             />
@@ -248,7 +256,7 @@ export function CheckoutForm({
         </div>
       </section>
 
-      <section className="space-y-2 rounded-md border p-4">
+      <section className="space-y-2 border border-border bg-card p-6 sm:p-8">
         <div className="flex justify-between text-sm">
           <span>Subtotal</span>
           <span>{formatINR(subtotal)}</span>
@@ -263,7 +271,7 @@ export function CheckoutForm({
           <span>Shipping</span>
           <span>{shippingTotal === 0 ? "Free" : formatINR(shippingTotal)}</span>
         </div>
-        <div className="flex justify-between border-t pt-2 font-semibold">
+        <div className="flex justify-between border-t border-border pt-2 font-semibold">
           <span>Total</span>
           <span>{formatINR(grandTotal)}</span>
         </div>

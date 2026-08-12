@@ -46,6 +46,8 @@ export async function saveProduct(
           isPublished: data.isPublished,
           isFeatured: data.isFeatured,
           model3dUrl: data.model3dUrl || null,
+          metaTitle: data.metaTitle || null,
+          metaDescription: data.metaDescription || null,
         },
         create: {
           name: data.name,
@@ -62,6 +64,8 @@ export async function saveProduct(
           isPublished: data.isPublished,
           isFeatured: data.isFeatured,
           model3dUrl: data.model3dUrl || null,
+          metaTitle: data.metaTitle || null,
+          metaDescription: data.metaDescription || null,
         },
       });
 
@@ -188,6 +192,46 @@ export async function deleteProduct(id: string): Promise<ActionResult> {
   } catch (error) {
     console.error(error);
     return { success: false, error: "Failed to delete product." };
+  }
+
+  revalidatePath("/admin/products");
+  return { success: true };
+}
+
+export async function bulkUpdateProducts(
+  ids: string[],
+  action: "publish" | "unpublish" | "delete",
+): Promise<ActionResult & { skipped?: string[] }> {
+  await requireAdmin();
+
+  if (ids.length === 0) {
+    return { success: false, error: "No products selected." };
+  }
+
+  try {
+    if (action === "publish" || action === "unpublish") {
+      await prisma.product.updateMany({
+        where: { id: { in: ids } },
+        data: { isPublished: action === "publish" },
+      });
+    } else {
+      const skipped: string[] = [];
+
+      for (const id of ids) {
+        const orderItemCount = await prisma.orderItem.count({ where: { variant: { productId: id } } });
+        if (orderItemCount > 0) {
+          skipped.push(id);
+          continue;
+        }
+        await prisma.product.delete({ where: { id } });
+      }
+
+      revalidatePath("/admin/products");
+      return { success: true, skipped };
+    }
+  } catch (error) {
+    console.error(error);
+    return { success: false, error: "Failed to update products." };
   }
 
   revalidatePath("/admin/products");

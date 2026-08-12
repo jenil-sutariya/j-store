@@ -1,12 +1,23 @@
 "use client";
 
 import { useRef } from "react";
-import Link from "next/link";
 import { motion, useMotionValueEvent, useScroll, useSpring, useTransform } from "framer-motion";
 import { JewelryHero } from "@/components/storefront/jewelry-hero";
 import { ArrowLink } from "@/components/storefront/editorial/arrow-link";
 
-export function Hero() {
+export function Hero({
+  kicker = "Aurelia — Est. Fine Jewellery",
+  headline = "Jewellery, crafted to become forever.",
+  subtext = "Each piece is designed to outlast trend, season, and occasion — made once, worn always.",
+  ctaLabel = "Explore Collection",
+  ctaHref = "/collections",
+}: {
+  kicker?: string;
+  headline?: string;
+  subtext?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+}) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
 
@@ -50,7 +61,7 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-xs tracking-[0.3em] text-muted-foreground uppercase"
         >
-          Aurelia — Est. Fine Jewellery
+          {kicker}
         </motion.p>
 
         <motion.div
@@ -69,7 +80,7 @@ export function Hero() {
           transition={{ duration: 1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
           className="font-display max-w-3xl text-[clamp(2.5rem,11vw,6.5rem)] leading-[1.05] tracking-tight"
         >
-          Jewellery, crafted to become forever.
+          {headline}
         </motion.h1>
 
         <motion.p
@@ -78,7 +89,7 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="mt-8 max-w-md text-sm text-muted-foreground"
         >
-          Each piece is designed to outlast trend, season, and occasion — made once, worn always.
+          {subtext}
         </motion.p>
 
         <motion.div
@@ -87,22 +98,9 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="mt-10"
         >
-          <ArrowLink href="/collections">Explore Collection</ArrowLink>
+          <ArrowLink href={ctaHref}>{ctaLabel}</ArrowLink>
         </motion.div>
       </motion.div>
-
-      <Link
-        href="#story"
-        data-cursor-hover
-        className="absolute bottom-10 left-1/2 flex -translate-x-1/2 flex-col items-center gap-3"
-      >
-        <span className="text-[10px] tracking-[0.25em] text-muted-foreground uppercase">Scroll</span>
-        <motion.span
-          animate={{ opacity: [0.3, 1, 0.3] }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-          className="h-10 w-px bg-foreground/40"
-        />
-      </Link>
     </section>
   );
 }

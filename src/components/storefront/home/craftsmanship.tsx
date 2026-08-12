@@ -3,12 +3,24 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/storefront/reveal"
 
 const STEPS = ["Design", "Craft", "Stone", "Finish", "Forever"];
 
-export function Craftsmanship() {
+export function Craftsmanship({
+  kicker = "Craftsmanship",
+  heading = "Crafted by hand.\nDesigned to last.",
+  body = "Every piece passes through the hands of a single goldsmith from first sketch to final polish — not a factory line, a craft, checked against the original design at every stage.",
+  imageUrl = "https://picsum.photos/seed/aurelia-craftsmanship/1800/1000",
+}: {
+  kicker?: string;
+  heading?: string;
+  body?: string;
+  imageUrl?: string;
+}) {
+  const lines = heading.split("\n");
+
   return (
     <section className="relative overflow-hidden bg-foreground py-28 text-background">
       <div className="absolute inset-0 opacity-30">
         <Image
-          src="https://picsum.photos/seed/aurelia-craftsmanship/1800/1000"
+          src={imageUrl}
           alt="Goldsmith at work"
           fill
           className="object-cover"
@@ -17,11 +29,16 @@ export function Craftsmanship() {
 
       <div className="relative mx-auto max-w-4xl px-6 text-center">
         <Reveal>
-          <p className="mb-4 text-xs tracking-[0.3em] text-background/60 uppercase">Craftsmanship</p>
+          <p className="mb-4 text-xs tracking-[0.3em] text-background/60 uppercase">{kicker}</p>
           <h2 className="font-display text-4xl leading-tight sm:text-5xl">
-            Crafted by hand.
-            <br />
-            Designed to last.
+            {lines.length > 1
+              ? lines.map((line, index) => (
+                  <span key={index}>
+                    {line}
+                    {index < lines.length - 1 && <br />}
+                  </span>
+                ))
+              : heading}
           </h2>
         </Reveal>
 
@@ -36,9 +53,7 @@ export function Craftsmanship() {
 
         <Reveal delay={0.15}>
           <p className="mx-auto mt-16 max-w-lg text-sm leading-relaxed text-background/70">
-            Every piece passes through the hands of a single goldsmith from first sketch to final
-            polish — not a factory line, a craft, checked against the original design at every
-            stage.
+            {body}
           </p>
         </Reveal>
       </div>

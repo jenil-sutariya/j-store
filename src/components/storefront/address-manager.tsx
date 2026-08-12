@@ -66,14 +66,14 @@ export function AddressManager({ addresses }: { addresses: Address[] }) {
         </DialogContent>
       </Dialog>
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {addresses.map((address) => (
-          <div key={address.id} className="rounded-md border p-4 text-sm">
-            <div className="mb-2 flex items-center gap-2">
-              <p className="font-medium">{address.fullName}</p>
+          <div key={address.id} className="border border-border bg-card p-4 text-sm sm:p-6">
+            <div className="mb-2 flex flex-wrap items-center gap-2">
+              <p className="font-medium break-words">{address.fullName}</p>
               {address.isDefault && <Badge variant="secondary">Default</Badge>}
             </div>
-            <p className="text-muted-foreground">
+            <p className="break-words text-muted-foreground">
               {address.line1}
               {address.line2 ? `, ${address.line2}` : ""}
             </p>
@@ -82,7 +82,7 @@ export function AddressManager({ addresses }: { addresses: Address[] }) {
             </p>
             <p className="text-muted-foreground">{address.phone}</p>
 
-            <div className="mt-3 flex gap-2">
+            <div className="mt-4 flex flex-wrap gap-2">
               <Dialog
                 open={editingId === address.id}
                 onOpenChange={(open) => setEditingId(open ? address.id : null)}

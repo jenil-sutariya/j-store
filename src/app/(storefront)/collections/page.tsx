@@ -10,7 +10,7 @@ export default async function CollectionsPage() {
   });
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-16">
+    <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
       <div className="mb-16 text-center">
         <p className="mb-3 text-xs tracking-[0.3em] text-muted-foreground uppercase">Aurelia</p>
         <h1 className="font-display text-4xl sm:text-5xl">Collections</h1>

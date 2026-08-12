@@ -15,15 +15,17 @@ const NAV_ITEMS = [
   { href: "/admin/orders", label: "Orders" },
   { href: "/admin/reviews", label: "Reviews" },
   { href: "/admin/customers", label: "Customers" },
+  { href: "/admin/settings", label: "Settings" },
+  { href: "/admin/content", label: "Content" },
 ];
 
-export function AdminSidebar({ adminName }: { adminName: string }) {
+export function AdminSidebar({ adminName, storeName }: { adminName: string; storeName: string }) {
   const pathname = usePathname();
 
   return (
     <aside className="flex h-screen w-60 flex-col border-r bg-background">
       <div className="border-b px-5 py-5">
-        <p className="text-sm font-medium text-muted-foreground">Jewellery Shop</p>
+        <p className="text-sm font-medium text-muted-foreground">{storeName}</p>
         <p className="text-lg font-semibold">Admin</p>
       </div>
       <nav className="flex-1 space-y-1 p-3">

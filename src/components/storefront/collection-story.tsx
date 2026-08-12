@@ -33,9 +33,9 @@ export function CollectionBanner({
         style={{ opacity: overlayOpacity }}
         className="absolute inset-0 bg-black"
       />
-      <div className="relative flex h-full flex-col items-center justify-center text-center text-white">
-        <h1 className="text-3xl font-semibold">{name}</h1>
-        {tagline && <p className="mt-1">{tagline}</p>}
+      <div className="relative flex h-full flex-col items-center justify-center px-4 text-center text-white">
+        <h1 className="font-display text-3xl sm:text-4xl">{name}</h1>
+        {tagline && <p className="mt-2 text-sm text-white/80 sm:text-base">{tagline}</p>}
       </div>
     </div>
   );

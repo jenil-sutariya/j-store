@@ -50,6 +50,8 @@ export const productSchema = z.object({
   isPublished: z.boolean(),
   isFeatured: z.boolean(),
   model3dUrl: z.string().optional().or(z.literal("")),
+  metaTitle: z.string().optional(),
+  metaDescription: z.string().optional(),
   categoryIds: z.array(z.string()).min(1, "Select at least one category"),
   primaryCategoryId: z.string().min(1, "Choose a primary category"),
   collectionIds: z.array(z.string()),

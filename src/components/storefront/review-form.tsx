@@ -32,19 +32,27 @@ export function ReviewForm({ orderItemId, productName }: { orderItemId: string; 
   }
 
   if (submitted) {
-    return <p className="text-sm text-muted-foreground">Thanks! Your review is pending approval.</p>;
+    return (
+      <p className="border border-border bg-card p-6 text-sm text-muted-foreground sm:p-8">
+        Thanks! Your review is pending approval.
+      </p>
+    );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 rounded-md border p-4">
-      <p className="text-sm font-medium">Review {productName}</p>
-      <div className="flex gap-1">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-5 border border-border bg-card p-6 sm:space-y-6 sm:p-8"
+    >
+      <p className="text-sm font-medium break-words">Review {productName}</p>
+      <div className="flex gap-1 text-lg">
         {[1, 2, 3, 4, 5].map((value) => (
           <button
             key={value}
             type="button"
+            aria-label={`${value} star${value > 1 ? "s" : ""}`}
             onClick={() => setRating(value)}
-            className={value <= rating ? "text-yellow-500" : "text-muted-foreground"}
+            className={value <= rating ? "text-primary" : "text-muted-foreground"}
           >
             ★
           </button>

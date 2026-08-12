@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { ProductVisual } from "@/components/storefront/product-visual";
 import { VariantSelector } from "@/components/storefront/variant-selector";
 import { WishlistButton } from "@/components/storefront/wishlist-button";
@@ -87,7 +88,9 @@ export function ProductPurchasePanel({
               {primaryCategoryName}
             </p>
           )}
-          <h1 className="font-display text-4xl leading-tight sm:text-5xl">{productName}</h1>
+          <h1 className="font-display text-3xl leading-tight break-words sm:text-4xl md:text-5xl">
+            {productName}
+          </h1>
           {ratingCount > 0 && (
             <p className="mt-3 text-xs tracking-[0.1em] text-muted-foreground uppercase">
               {"★".repeat(Math.round(ratingAvg))} {ratingAvg.toFixed(1)} ({ratingCount} reviews)
@@ -133,9 +136,9 @@ export function ProductPurchasePanel({
             <AccordionTrigger className="text-xs tracking-[0.15em] uppercase">Delivery</AccordionTrigger>
             <AccordionContent className="text-sm text-muted-foreground">
               Free shipping on orders above ₹2,000, dispatched within 1–2 business days. See our{" "}
-              <a href="/legal/shipping-policy" className="underline">
+              <Link href="/legal/shipping-policy" data-cursor-hover className="link-underline text-foreground">
                 shipping policy
-              </a>{" "}
+              </Link>{" "}
               for details.
             </AccordionContent>
           </AccordionItem>

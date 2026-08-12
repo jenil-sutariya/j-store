@@ -291,25 +291,27 @@ model ProductCollection {
 // ==================== PRODUCT / VARIANT / IMAGE ====================
 
 model Product {
-  id          String     @id @default(cuid())
-  name        String
-  slug        String     @unique
-  description String
-  brand       String?
-  basePrice   Decimal    @db.Decimal(10, 2)
-  gstRate     Decimal    @default(3.00) @db.Decimal(4, 2)
-  hsnCode     String?
-  gender      Gender     @default(UNISEX)
-  occasions   Occasion[]
-  gemstones   Gemstone[]
-  styleTags   StyleTag[]
-  isPublished Boolean    @default(false)
-  isFeatured  Boolean    @default(false)
-  ratingAvg   Decimal    @default(0) @db.Decimal(3, 2)
-  ratingCount Int        @default(0)
-  model3dUrl  String? // path/URL to a .glb/.gltf model for the 3D viewer; null = no 3D model yet
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  id              String     @id @default(cuid())
+  name            String
+  slug            String     @unique
+  description     String
+  brand           String?
+  basePrice       Decimal    @db.Decimal(10, 2)
+  gstRate         Decimal    @default(3.00) @db.Decimal(4, 2)
+  hsnCode         String?
+  gender          Gender     @default(UNISEX)
+  occasions       Occasion[]
+  gemstones       Gemstone[]
+  styleTags       StyleTag[]
+  isPublished     Boolean    @default(false)
+  isFeatured      Boolean    @default(false)
+  ratingAvg       Decimal    @default(0) @db.Decimal(3, 2)
+  ratingCount     Int        @default(0)
+  model3dUrl      String? // path/URL to a .glb/.gltf model for the 3D viewer; null = no 3D model yet
+  metaTitle       String?
+  metaDescription String?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
 
   variants     ProductVariant[]
   images       ProductImage[]
@@ -549,7 +551,48 @@ model WishlistItem {
 // ==================== NEWSLETTER ====================
 
 model NewsletterSubscriber {
-  id          String   @id @default(cuid())
-  email       String   @unique
+  id           String   @id @default(cuid())
+  email        String   @unique
   subscribedAt DateTime @default(now())
+}
+
+// ==================== STORE SETTINGS / SITE CONTENT ====================
+
+// Singleton row (fetched via findFirst) holding store-wide business config
+// that used to be scattered across hardcoded constants and strings.
+model StoreSettings {
+  id                    String   @id @default(cuid())
+  storeName             String   @default("Aurelia")
+  tagline               String?
+  logoUrl               String?
+  logoPublicId          String?
+  legalEntityName       String?
+  gstin                 String?
+  registeredAddress     String?  @db.Text
+  supportEmail          String?
+  supportPhone          String?
+  instagramUrl          String?
+  facebookUrl           String?
+  shippingFlatFee       Decimal  @default(99) @db.Decimal(10, 2)
+  freeShippingThreshold Decimal  @default(2000) @db.Decimal(10, 2)
+  updatedAt             DateTime @updatedAt
+}
+
+// One row per admin-editable storefront copy/image block, keyed by `key`
+// (e.g. "home_hero", "about_page"). Generic shape mirrors Collection's
+// tagline/storyContent/bannerUrl fields so a single form/screen can edit
+// every block instead of one bespoke model per section.
+model SiteContent {
+  id            String   @id @default(cuid())
+  key           String   @unique
+  section       String
+  label         String
+  title         String?
+  tagline       String?
+  body          String?  @db.Text
+  imageUrl      String?
+  imagePublicId String?
+  linkLabel     String?
+  linkHref      String?
+  updatedAt     DateTime @updatedAt
 }

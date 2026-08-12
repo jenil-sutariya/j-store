@@ -376,6 +376,130 @@ async function main() {
   }
 
   console.log(`Seeded ${products.length} products with variants and images.`);
+
+  // ---------------- Store settings ----------------
+  await prisma.storeSettings.upsert({
+    where: { id: "store-settings-singleton" },
+    update: {},
+    create: {
+      id: "store-settings-singleton",
+      storeName: "Aurelia",
+      tagline: "Fine jewellery, made once and worn always.",
+      legalEntityName: "Aurelia Jewellery Pvt. Ltd.",
+      registeredAddress: "4th Floor, Zaveri Bazaar Road, Mumbai, Maharashtra 400002, India",
+      supportEmail: "support@aurelia.example",
+      supportPhone: "+91 98765 43210",
+      shippingFlatFee: 99,
+      freeShippingThreshold: 2000,
+    },
+  });
+  console.log("Store settings ready.");
+
+  // ---------------- Site content ----------------
+  // Defaults mirror the copy that used to be hardcoded in each component, so
+  // seeding this doesn't change anything visually until an admin edits it.
+  const contentBlocks = [
+    {
+      key: "home_hero",
+      section: "Homepage",
+      label: "Hero",
+      tagline: "Aurelia — Est. Fine Jewellery",
+      title: "Jewellery, crafted to become forever.",
+      body: "Each piece is designed to outlast trend, season, and occasion — made once, worn always.",
+      linkLabel: "Explore Collection",
+      linkHref: "/collections",
+    },
+    {
+      key: "home_art_of_piece",
+      section: "Homepage",
+      label: "Art of the Piece",
+      tagline: "The Art of the Piece",
+      title: "Some pieces are worn.\nSome become part of you.",
+      body: "We don't design for a moment — we design for the years after it. Every curve of metal, every angle of a cut stone, is considered for how it will feel a decade from now, not just how it photographs today.",
+      imageUrl: placeholderImage("aurelia-art-of-piece", 1000, 1250),
+    },
+    {
+      key: "home_craftsmanship",
+      section: "Homepage",
+      label: "Craftsmanship",
+      tagline: "Craftsmanship",
+      title: "Crafted by hand.\nDesigned to last.",
+      body: "Every piece passes through the hands of a single goldsmith from first sketch to final polish — not a factory line, a craft, checked against the original design at every stage.",
+      imageUrl: placeholderImage("aurelia-craftsmanship", 1800, 1000),
+    },
+    {
+      key: "home_material_1",
+      section: "Homepage",
+      label: "Material — 1st",
+      title: "18K Gold",
+      body: "Warm, enduring and unmistakably timeless.",
+      imageUrl: placeholderImage("aurelia-material-gold", 900, 1100),
+    },
+    {
+      key: "home_material_2",
+      section: "Homepage",
+      label: "Material — 2nd",
+      title: "Diamonds",
+      body: "Cut to capture light from every angle.",
+      imageUrl: placeholderImage("aurelia-material-diamond", 900, 1100),
+    },
+    {
+      key: "home_gallery_1",
+      section: "Homepage",
+      label: "Atelier Gallery — 1st",
+      imageUrl: placeholderImage("aurelia-gallery-1", 1800, 1000),
+    },
+    {
+      key: "home_gallery_2",
+      section: "Homepage",
+      label: "Atelier Gallery — 2nd",
+      imageUrl: placeholderImage("aurelia-gallery-2", 900, 1200),
+    },
+    {
+      key: "home_gallery_3",
+      section: "Homepage",
+      label: "Atelier Gallery — 3rd",
+      imageUrl: placeholderImage("aurelia-gallery-3", 900, 1200),
+    },
+    {
+      key: "home_gallery_4",
+      section: "Homepage",
+      label: "Atelier Gallery — 4th",
+      imageUrl: placeholderImage("aurelia-gallery-4", 1800, 1100),
+    },
+    {
+      key: "home_brand_story",
+      section: "Homepage",
+      label: "Brand Story",
+      tagline: "Why We Create",
+      title: "We believe jewellery\nis more than\nan accessory.",
+      body: "It's the thing you reach for without thinking, the piece that outlasts the outfit it was bought for. We make jewellery for people who wear it until it becomes part of how they're recognised — not for a single photograph.",
+    },
+    {
+      key: "about_page",
+      section: "About",
+      label: "About Page",
+      title: "Our Story",
+      imageUrl: placeholderImage("aurelia-atelier", 1600, 800),
+      body: "Aurelia started with a simple idea: jewellery you actually reach for every day shouldn't mean compromising on craft. Every piece we make is designed first for wear — balanced weight, settings that hold up to daily life, and metals we're proud to stand behind.\n\nWe work with a small circle of goldsmiths and setters, mostly based out of Mumbai and Jaipur, who've spent decades perfecting hand-finishing techniques that get lost in mass production. Every gemstone is checked, every setting is tested, before it ever reaches you.",
+    },
+    {
+      key: "contact_page",
+      section: "Contact",
+      label: "Contact Page",
+      title: "Get in Touch",
+      tagline: "Questions about an order, sizing, or a custom piece — we're happy to help.",
+    },
+  ];
+
+  for (const block of contentBlocks) {
+    await prisma.siteContent.upsert({
+      where: { key: block.key },
+      update: {},
+      create: block,
+    });
+  }
+  console.log(`Seeded ${contentBlocks.length} site content blocks.`);
 }
 
 main()

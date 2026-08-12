@@ -1,6 +1,10 @@
 import { LegalContent } from "@/components/storefront/legal-content";
+import { getStoreSettings } from "@/lib/queries/settings";
 
-export default function ReturnsRefundsPage() {
+export default async function ReturnsRefundsPage() {
+  const settings = await getStoreSettings();
+  const supportEmail = settings.supportEmail ?? "support@aurelia.example";
+
   return (
     <LegalContent title="Returns & Refunds Policy" updatedLabel="Last updated: August 2026">
       <p>
@@ -23,7 +27,7 @@ export default function ReturnsRefundsPage() {
 
       <h2>How to start a return</h2>
       <p>
-        Email support@aurelia.example with your order number and reason for return. We&apos;ll
+        Email {supportEmail} with your order number and reason for return. We&apos;ll
         arrange a reverse pickup where available, or share a return shipping address.
       </p>
 

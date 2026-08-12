@@ -1,10 +1,15 @@
 import { LegalContent } from "@/components/storefront/legal-content";
+import { getStoreSettings } from "@/lib/queries/settings";
 
-export default function PrivacyPolicyPage() {
+export default async function PrivacyPolicyPage() {
+  const settings = await getStoreSettings();
+  const legalEntityName = settings.legalEntityName ?? "Aurelia Jewellery Pvt. Ltd.";
+  const supportEmail = settings.supportEmail ?? "support@aurelia.example";
+
   return (
     <LegalContent title="Privacy Policy" updatedLabel="Last updated: August 2026">
       <p>
-        Aurelia Jewellery Pvt. Ltd. (&quot;Aurelia&quot;, &quot;we&quot;, &quot;us&quot;) respects
+        {legalEntityName} (&quot;Aurelia&quot;, &quot;we&quot;, &quot;us&quot;) respects
         your privacy. This policy explains what information we collect when you use this website,
         how we use it, and the choices you have.
       </p>
@@ -36,7 +41,7 @@ export default function PrivacyPolicyPage() {
       <p>
         We retain order records for as long as required under applicable tax and consumer
         protection law. You can request deletion of your account by emailing
-        support@aurelia.example; order records tied to completed transactions may be retained
+        {supportEmail}; order records tied to completed transactions may be retained
         separately as required by law.
       </p>
 
@@ -44,11 +49,11 @@ export default function PrivacyPolicyPage() {
       <p>
         You can review or update your account details and addresses at any time from your
         account page. To request a copy of your data or its deletion, contact us at
-        support@aurelia.example.
+        {supportEmail}.
       </p>
 
       <h2>Contact</h2>
-      <p>Questions about this policy can be sent to support@aurelia.example.</p>
+      <p>Questions about this policy can be sent to {supportEmail}.</p>
     </LegalContent>
   );
 }

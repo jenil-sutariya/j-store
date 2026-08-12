@@ -3,7 +3,7 @@ export type UploadedImage = {
   publicId: string;
 };
 
-export async function uploadImageToCloudinary(file: File): Promise<UploadedImage> {
+async function uploadToCloudinary(file: File, resourceType: "image" | "raw"): Promise<UploadedImage> {
   const signatureResponse = await fetch("/api/uploads/cloudinary-signature", {
     method: "POST",
   });
@@ -21,16 +21,26 @@ export async function uploadImageToCloudinary(file: File): Promise<UploadedImage
   formData.append("signature", signature);
   formData.append("folder", folder);
 
-  const uploadResponse = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+  const uploadResponse = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`, {
     method: "POST",
     body: formData,
   });
 
   if (!uploadResponse.ok) {
     const errorBody = await uploadResponse.json().catch(() => null);
-    throw new Error(errorBody?.error?.message ?? "Image upload failed.");
+    throw new Error(errorBody?.error?.message ?? "Upload failed.");
   }
 
   const result = await uploadResponse.json();
   return { url: result.secure_url as string, publicId: result.public_id as string };
+}
+
+export function uploadImageToCloudinary(file: File): Promise<UploadedImage> {
+  return uploadToCloudinary(file, "image");
+}
+
+// .glb/.gltf files aren't images, so Cloudinary requires the "raw" resource
+// type endpoint instead of "image" — same signed-upload flow otherwise.
+export function uploadModelToCloudinary(file: File): Promise<UploadedImage> {
+  return uploadToCloudinary(file, "raw");
 }

@@ -58,17 +58,18 @@ export function CartItemRow({ item }: { item: CartItem }) {
   }
 
   return (
-    <div className="flex gap-4 border-b py-4">
-      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-md bg-muted">
+    <div className="flex gap-4 py-5 sm:gap-6 sm:py-6">
+      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-md bg-muted sm:h-24 sm:w-24">
         {image && (
           <Image src={image.url} alt={image.altText ?? ""} fill className="object-cover" />
         )}
       </div>
       <div className="min-w-0 flex-1">
-        <div className="flex items-start justify-between gap-2">
+        <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1">
           <Link
             href={`/products/${item.variant.product.slug}`}
-            className="font-medium break-words hover:underline"
+            data-cursor-hover
+            className="link-underline w-fit pb-0.5 font-medium break-words"
           >
             {item.variant.product.name}
           </Link>
@@ -81,12 +82,12 @@ export function CartItemRow({ item }: { item: CartItem }) {
         </p>
         <p className="mt-1 text-sm">{formatINR(Number(item.variant.price))}</p>
 
-        <div className="mt-2 flex flex-wrap items-center gap-3">
-          <div className="flex items-center rounded-md border">
+        <div className="mt-3 flex flex-wrap items-center gap-3">
+          <div className="flex items-center rounded-md border border-border">
             <button
               type="button"
               disabled={isPending}
-              className="px-2 py-1 text-sm"
+              className="px-3 py-1.5 text-sm disabled:opacity-50"
               onClick={() => handleQuantityChange(item.quantity - 1)}
             >
               -
@@ -95,7 +96,7 @@ export function CartItemRow({ item }: { item: CartItem }) {
             <button
               type="button"
               disabled={isPending || item.quantity >= item.variant.stockQuantity}
-              className="px-2 py-1 text-sm"
+              className="px-3 py-1.5 text-sm disabled:opacity-50"
               onClick={() => handleQuantityChange(item.quantity + 1)}
             >
               +

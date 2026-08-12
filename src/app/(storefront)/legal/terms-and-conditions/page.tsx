@@ -1,11 +1,16 @@
+import Link from "next/link";
 import { LegalContent } from "@/components/storefront/legal-content";
+import { getStoreSettings } from "@/lib/queries/settings";
 
-export default function TermsPage() {
+export default async function TermsPage() {
+  const settings = await getStoreSettings();
+  const legalEntityName = settings.legalEntityName ?? "Aurelia Jewellery Pvt. Ltd.";
+
   return (
     <LegalContent title="Terms & Conditions" updatedLabel="Last updated: August 2026">
       <p>
         These terms govern your use of this website and any purchase made through it. By placing
-        an order with Aurelia Jewellery Pvt. Ltd., you agree to the terms below.
+        an order with {legalEntityName}, you agree to the terms below.
       </p>
 
       <h2>Product information</h2>
@@ -32,16 +37,19 @@ export default function TermsPage() {
 
       <h2>Shipping and delivery</h2>
       <p>
-        See our <a href="/legal/shipping-policy" className="underline">Shipping Policy</a> for
-        delivery timelines and charges.
+        See our{" "}
+        <Link href="/legal/shipping-policy" data-cursor-hover className="link-underline pb-0.5">
+          Shipping Policy
+        </Link>{" "}
+        for delivery timelines and charges.
       </p>
 
       <h2>Returns and refunds</h2>
       <p>
         See our{" "}
-        <a href="/legal/returns-refunds" className="underline">
+        <Link href="/legal/returns-refunds" data-cursor-hover className="link-underline pb-0.5">
           Returns &amp; Refunds Policy
-        </a>{" "}
+        </Link>{" "}
         for details on returns, exchanges, and refund timelines.
       </p>
 

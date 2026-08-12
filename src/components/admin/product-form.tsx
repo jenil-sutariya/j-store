@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { productSchema, type ProductInput } from "@/lib/validators/product";
 import { saveProduct } from "@/lib/actions/product";
+import { ModelUploader } from "@/components/admin/model-uploader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -86,6 +87,8 @@ export function ProductForm({
       isPublished: false,
       isFeatured: false,
       model3dUrl: "",
+      metaTitle: "",
+      metaDescription: "",
       categoryIds: [],
       primaryCategoryId: "",
       collectionIds: [],
@@ -260,15 +263,35 @@ export function ProductForm({
 
         <div className="space-y-2">
           <Label htmlFor="model3dUrl">3D model URL (.glb)</Label>
-          <Input
-            id="model3dUrl"
-            placeholder="/models/rings/diamond-solitaire.glb"
-            {...form.register("model3dUrl")}
-          />
+          <div className="flex items-center gap-2">
+            <Input
+              id="model3dUrl"
+              placeholder="/models/rings/diamond-solitaire.glb"
+              {...form.register("model3dUrl")}
+            />
+            <ModelUploader
+              value={form.watch("model3dUrl") ?? ""}
+              onChange={(url) => form.setValue("model3dUrl", url)}
+            />
+          </div>
           <p className="text-xs text-muted-foreground">
-            Path or URL to a .glb file. Leave blank to show the photo gallery only. See{" "}
+            Path or URL to a .glb file, or upload one directly. Leave blank to show the photo gallery only. See{" "}
             <code>public/models/README.md</code> for naming and mesh conventions.
           </p>
+        </div>
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="text-lg font-semibold">SEO</h2>
+
+        <div className="space-y-2">
+          <Label htmlFor="metaTitle">Meta title</Label>
+          <Input id="metaTitle" {...form.register("metaTitle")} />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="metaDescription">Meta description</Label>
+          <Textarea id="metaDescription" rows={3} {...form.register("metaDescription")} />
         </div>
       </section>
 

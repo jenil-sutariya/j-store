@@ -1,14 +1,30 @@
 import Image from "next/image";
 import { Reveal } from "@/components/storefront/reveal";
 
-const IMAGES = [
-  { src: "https://picsum.photos/seed/aurelia-gallery-1/1800/1000", span: "full", aspect: "aspect-[16/9]" },
-  { src: "https://picsum.photos/seed/aurelia-gallery-2/900/1200", span: "half", aspect: "aspect-[3/4]" },
-  { src: "https://picsum.photos/seed/aurelia-gallery-3/900/1200", span: "half", aspect: "aspect-[3/4]" },
-  { src: "https://picsum.photos/seed/aurelia-gallery-4/1800/1100", span: "full", aspect: "aspect-[16/10]" },
+const LAYOUT = [
+  { span: "full", aspect: "aspect-[16/9]" },
+  { span: "half", aspect: "aspect-[3/4]" },
+  { span: "half", aspect: "aspect-[3/4]" },
+  { span: "full", aspect: "aspect-[16/10]" },
 ];
 
-export function EditorialGallery() {
+const DEFAULT_IMAGE_URLS = [
+  "https://picsum.photos/seed/aurelia-gallery-1/1800/1000",
+  "https://picsum.photos/seed/aurelia-gallery-2/900/1200",
+  "https://picsum.photos/seed/aurelia-gallery-3/900/1200",
+  "https://picsum.photos/seed/aurelia-gallery-4/1800/1100",
+];
+
+export function EditorialGallery({
+  imageUrls = DEFAULT_IMAGE_URLS,
+}: {
+  imageUrls?: string[];
+}) {
+  const images = LAYOUT.map((layout, index) => ({
+    ...layout,
+    src: imageUrls[index] ?? DEFAULT_IMAGE_URLS[index],
+  }));
+
   return (
     <section className="mx-auto max-w-7xl space-y-6 px-6 py-28">
       <Reveal>
@@ -18,9 +34,9 @@ export function EditorialGallery() {
       </Reveal>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-        {IMAGES.map((image, index) => (
+        {images.map((image, index) => (
           <Reveal
-            key={image.src}
+            key={index}
             delay={index * 0.05}
             className={image.span === "full" ? "sm:col-span-2" : ""}
           >

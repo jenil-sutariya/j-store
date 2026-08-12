@@ -28,16 +28,16 @@ export default async function CollectionDetailPage({
         />
       )}
 
-      <div className="mx-auto max-w-6xl px-6 py-10">
+      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
         {!collection.bannerUrl && (
-          <h1 className="mb-2 text-2xl font-semibold">{collection.name}</h1>
+          <h1 className="mb-2 font-display text-3xl sm:text-4xl">{collection.name}</h1>
         )}
         {collection.storyContent && <CollectionStoryText content={collection.storyContent} />}
 
         {products.length === 0 ? (
           <p className="text-muted-foreground">No products in this collection yet.</p>
         ) : (
-          <RevealGroup className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
+          <RevealGroup className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 sm:gap-x-6 sm:gap-y-12 lg:grid-cols-4">
             {products.map((product) => (
               <RevealItem key={product.id}>
                 <ProductCard product={product} />

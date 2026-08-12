@@ -41,17 +41,18 @@ export default async function OrderDetailPage({
   const reviewedProductIds = new Set(existingReviews.map((r) => r.productId));
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-10">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-semibold font-mono">{order.orderNumber}</h1>
+    <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+      <p className="mb-3 text-xs tracking-[0.3em] text-muted-foreground uppercase">Account</p>
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-3">
+        <h1 className="font-display text-2xl break-words sm:text-3xl">{order.orderNumber}</h1>
         <Badge variant="secondary">{order.status.replace(/_/g, " ")}</Badge>
       </div>
 
       <div className="space-y-4">
         {order.items.map((item) => (
-          <div key={item.id} className="space-y-2">
-            <div className="flex justify-between text-sm">
-              <span>
+          <div key={item.id} className="space-y-2 border-b border-border pb-4 last:border-b-0">
+            <div className="flex flex-wrap justify-between gap-x-4 gap-y-1 text-sm">
+              <span className="break-words">
                 {item.productNameSnapshot} × {item.quantity}
               </span>
               <span>{formatINR(Number(item.lineTotal))}</span>
@@ -90,7 +91,7 @@ export default async function OrderDetailPage({
 
       <div className="text-sm">
         <p className="font-medium">Delivery address</p>
-        <p className="text-muted-foreground">
+        <p className="break-words text-muted-foreground">
           {order.shippingAddress.fullName}, {order.shippingAddress.line1}, {order.shippingAddress.city},{" "}
           {order.shippingAddress.state} {order.shippingAddress.postalCode}
         </p>

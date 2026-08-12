@@ -48,6 +48,8 @@ export default async function EditProductPage({
             isPublished: product.isPublished,
             isFeatured: product.isFeatured,
             model3dUrl: product.model3dUrl ?? "",
+            metaTitle: product.metaTitle ?? "",
+            metaDescription: product.metaDescription ?? "",
             categoryIds: product.categories.map((c) => c.categoryId),
             primaryCategoryId: product.categories.find((c) => c.isPrimary)?.categoryId ?? "",
             collectionIds: product.collections.map((c) => c.collectionId),

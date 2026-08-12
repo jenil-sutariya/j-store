@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { signOut } from "next-auth/react";
 import { motion } from "framer-motion";
 import { AccountMenu } from "@/components/storefront/account-menu";
@@ -18,10 +19,14 @@ export function HeaderShell({
   userName,
   isSignedIn,
   cartCount,
+  storeName,
+  logoUrl,
 }: {
   userName: string | null | undefined;
   isSignedIn: boolean;
   cartCount: number;
+  storeName: string;
+  logoUrl: string | null;
 }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -51,8 +56,14 @@ export function HeaderShell({
         )}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
-          <Link href="/" data-cursor-hover className="font-display text-2xl tracking-[0.08em] text-primary">
-            AURELIA
+          <Link href="/" data-cursor-hover className="flex items-center">
+            {logoUrl ? (
+              <Image src={logoUrl} alt={storeName} height={32} width={128} className="h-8 w-auto" />
+            ) : (
+              <span className="font-display text-2xl tracking-[0.08em] text-primary">
+                {storeName}
+              </span>
+            )}
           </Link>
 
           <nav className="hidden items-center gap-10 md:flex">
@@ -115,7 +126,13 @@ export function HeaderShell({
           className="fixed inset-0 z-[60] flex flex-col bg-background md:hidden"
         >
           <div className="flex items-center justify-between px-6 py-6">
-            <span className="font-display text-2xl tracking-[0.08em] text-primary">AURELIA</span>
+            {logoUrl ? (
+              <Image src={logoUrl} alt={storeName} height={32} width={128} className="h-8 w-auto" />
+            ) : (
+              <span className="font-display text-2xl tracking-[0.08em] text-primary">
+                {storeName}
+              </span>
+            )}
             <button
               type="button"
               aria-label="Close menu"
